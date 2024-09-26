@@ -1,279 +1,426 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Assessing the Impact and Potential of TTS for Pathological Voice Data Augmentation on Pathology Detection Systems</title>
+    <!-- Fuentes de Google -->
+     <link rel="icon" href="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/Imagenes/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- CSS para estilo -->
     <style>
-        .titulo-container {
-            background-image: url(https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/Imagenes/Degradado.jpg);;
-            background-size: cover;
-            background-position: center;
-            /* Establecemos el tamaño del contenedor y la altura mínima para asegurar que la imagen de fondo cubra todo el título */
-            height: 180px;
-            /* Establecemos el color y estilo del texto del título */
-            color: white;
-            text-align: center;
-            font-size: 18px;
-            /* Centramos el título verticalmente */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color:  #f4f7fa;
+            margin: 0;
+            padding: 0;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            align-items: center;
         }
-      .logo1 {
-            position: absolute;
-            top: 115px; /* Distancia desde la parte superior */
-            right: 50px; /* Distancia desde la derecha */
-            width: 150px; /* Ancho del logotipo */
-            height: 60px; /* Altura del logotipo */
+        header {
+            background-color:  #2c3e50; 
+            color: white;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
         }
-      .logo2 {
-            position: absolute;
-            top: 100px; /* Distancia desde la parte superior */
-            left: 50px; /* Distancia desde la derecha */
-            width: 150px; /* Ancho del logotipo */
-            height: 80px; /* Altura del logotipo */
+        subheader {
+            background-color:  #85929e; 
+            color: white;
+            padding: 15px;
+            width: 100%;
         }
-        .contenedor-imagen {
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
             display: flex;
-            justify-content: space-around;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .logo-container {
+            display: flex;
             align-items: center;
-            margin: 20px;
+            justify-content: center;
+            width: 100%;
         }
-
-        .imagen {
-            border: 2px solid #333;
+        .logo {
+            width: 120px; /* Aumentar el tamaño del logo */
+            height: auto;
+            margin: 0 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #34495e;
+        }
+        .card img, .card audio {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+       audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: white;
             padding: 10px;
-            max-width: 200px; /* Establece el ancho máximo para las imágenes */
+            text-align: center;
+            width: 100%;
         }
-
+        .selector-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        select {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
         table {
             width: 100%;
+            margin-bottom: 20px;
             border-collapse: collapse;
-            background-color:#f2f2f2;
         }
-
         th, td {
-            border: 1px solid black;
             padding: 10px;
+            border: 1px solid #ddd;
             text-align: center;
         }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        iframe {
+            border: none;
+        }
+        h2 {
+            font-size: 1.8rem; /* Aumentar el tamaño del texto */
+            text-align: center; /* Centrar el texto */
+            margin: 0 20px; /* Espaciado entre el texto y los logos */
+        }
+        p {
+            text-align: center; /* Centrar el párrafo */
+            margin: 5px 0; /* Espaciado alrededor del párrafo */
+            font-size: 1.2rem; /* Tamaño del texto */
+        }
+        .audio-player {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+        }
 
-        th {
-            background-color: #333;
-            color: white;
+        .player-box {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            width: 45%;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .player-box audio {
+            width: 100%;
+        }
+
+        .label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .fake-audios {
+            margin-top: 20px;
+        }
+
+        .fake-audio-item {
+            margin-bottom: 15px;
+        }
+         select_audio {
+            font-size: 16px;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+        .label_audio {
+            font-size: 16px;
+            color: #4a90e2;
+            margin-bottom: 5px;
+        }
+        .speaker-info {
+            margin-top: 10px;
+            font-style: italic;
+            font-size: 14px;
+            color: #555;
         }
     </style>
 </head>
-    <body>
-    <!-- Colocamos el título dentro del contenedor con la imagen de fondo -->
-    <div class="titulo-container">
+<body>
+
+<header>
+        
         <h1>Assessing the Impact and Potential of TTS for Pathological Voice Data Augmentation on Pathology Detection Systems</h1>
+        
+</header>
+<subheader>
+    <div class="logo-container">
+        <img src="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/Imagenes/Unizar.png" alt="Logo Universidad" class="logo">
+        <h2>Authors:</h2> <br>
+         <p>Santiago Rubio Felipo, Dayana Ribas González, Eduardo Lleida Solano, Alfonso Ortega Giménez and Antonio Miguel Artiaga </p>
+        <img src="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/Imagenes/Vivolab.png" alt="Logo Grupo Investigación" class="logo">
     </div>
-    <img src="https://santirf01.github.io/TFG_TTS_page.io/Imagenes/Vivolab.png" alt="Imagen de Vivolab" class="logo1">
-    <img src="https://santirf01.github.io/TFG_TTS_page.io/Imagenes/Unizar.png" alt="Imagen de Unizar" class="logo2">
-  <center>
-      <p><strong> Autor</strong>: VoxCraft.      <strong> Directores</strong> : Eduardo Lleida Solano,  Dayana Ribas González. </p>
-  <!--<p><strong> Autor</strong>: Santiago Rubio Felipo.      <strong> Directores</strong> : Eduardo Lleida Solano,  Dayana Ribas González. </p>-->
-  <span class="entry-meta"><time itemprop="datePublished" datetime="2023-08-28"><em>Agosto 28, 2023</em></time></span>
-   </center>
-
-<p>Assessing the Impact and Potential of TTS for Pathological Voice Data Augmentation on Pathology Detection Systems </p>
-<table>
-    <tr>
-        <th colspan="2">Elige la Base de Datos que quieres ver</th>
-    </tr>
-    <tr>
-        <td>
-            <select id="categoriaSelector" onchange="showCategory(this.value)">
-                <option value="">Selecciona una categoría</option>
-                <option value="Experimento1">Experimento 1</option>
-                <option value="Experimento2">Experimento 2</option>
-                <option value="Experimento3">Experimento 3</option>
-                <option value="Experimento4">Experimento 4</option>
-                <option value="Experimento5">Experimento 5</option>
-                <option value="Experimento6">Experimento 6</option>
-                <option value="Experimento7">Experimento 7</option>
-            </select>
-        </td>
-        <td id="selectContainer">
-            <!-- Aquí se cargará el segundo select -->
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <div id="contenido"></div>
-        </td>
-    </tr>
-</table>
-    <script>
-        var selectContainer = document.getElementById("selectContainer");
-       var secondSelectCreated = false; // Variable para controlar si se ha creado el segundo select
-        // Función para cargar el contenido según la selección
-        function loadContent(url) {
-            var contenidoDiv = document.getElementById("contenido");
-            if (url) {
-                contenidoDiv.innerHTML = '<iframe src="' + url + '" width="840" height="640"></iframe>';
-            } else {
-                contenidoDiv.innerHTML = ""; // Limpiar el contenido si no se selecciona nada
-            }
-        }
- function updateSecondSelect(optionsHtml) {
-        selectContainer.innerHTML = optionsHtml;
-    }        
-function showCategory(category) {
-    var contenidoDiv = document.getElementById("contenido");
+</subheader>
+<subheader>
+    <div class="logo-container">
+        <img src="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/Imagenes/Iberspeech.png" alt="Logo Universidad" class="logo">
+        <h2> IberSPEECH 2024, Aveiro, Portugal. XIII Jornadas en Tecnologías del Habla and the VI Iberian SLTech. </h2>
+    </div>
+   
+    <p>11/11/2024-13/11/2024</p>
     
-    // Limpia el contenido del primer select cada vez que se elige una nueva categoría
-    contenidoDiv.innerHTML = "";
+</subheader>
+    <br> <br>
+    <h2>TTS Data Augmentation</h2>
+<div class="container">
+    <label_audio for="speaker-select">Select Speaker:</label_audio>
+    <select id="speaker-select">
+        <!-- <option value="TVD-D-0001">TVD-D-0001</option>
+        <option value="TVD-D-0002">TVD-D-0002</option>
+        <option value="TVD-D-0003">TVD-D-0003</option>
+        <option value="TVD-D-0005">TVD-D-0005</option>
+        <option value="TVD-D-0006">TVD-D-0006</option>
+        <option value="TVD-D-0007">TVD-D-0007</option>
+        <option value="TVD-D-0008">TVD-D-0008</option>
+        <option value="TVD-D-0009">TVD-D-0009</option>
+        <option value="TVD-D-0010">TVD-D-0010</option>
+        <option value="TVD-D-0011">TVD-D-0011</option>
+        <option value="TVD-D-0012">TVD-D-0012</option>
+        <option value="TVD-D-0013">TVD-D-0013</option>-->
+        <!-- Add more speakers here -->
+    </select>
+    
+    <div class="audio-player">
+        <!-- Original Audio -->
+        <div class="player-box">
+            <div class="label">Original Audio</div>
+            <audio id="original-audio" controls>
+                <source id="original-source" src="" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+            <div id="speakerInfo" class="speaker-info"></div>
+        </div>
+         
+        <!-- Fake Audios -->
+        <div class="player-box">
+            <div class="label">Data Augmentation TTS</div>
 
-    switch (category) {
-        case "Experimento5":
-            if (!secondSelectCreated) {
-                var selectHtml = createSelect("Image_exp5");
-                 updateSecondSelect(selectHtml);
-                secondSelectCreated = true;
-            }else {
-                var selectHtml = createSelect("Image_exp5"); 
-                updateSecondSelect(selectHtml);
-            }
-            document.getElementById("Image_exp5").selectedIndex = 0;
-            break;
-        case "Experimento6":
-            if (!secondSelectCreated) {
-                var selectHtml = createSelect("Image_exp6");
-                 updateSecondSelect(selectHtml);
-                secondSelectCreated = true;
-            }else {
-               var selectHtml = createSelect("Image_exp6");
-                updateSecondSelect(selectHtml);
-            }
-            document.getElementById("Image_exp6").selectedIndex = 0;
-            break;
-        case "Experimento7":
-            if (!secondSelectCreated) {
-                var selectHtml = createSelect("Image_exp7");
-                 updateSecondSelect(selectHtml);
-                secondSelectCreated = true;
-            }else {
-            var selectHtml = createSelect("Image_exp7");
-                 updateSecondSelect(selectHtml);
-            }
-            document.getElementById("Image_exp7").selectedIndex = 0;
-            break;
-        case "Experimento1":
-            if (!secondSelectCreated) {
-                var selectHtml = createSelect("Image_exp1");
-                 updateSecondSelect(selectHtml);
-                secondSelectCreated = true;
-            }else {
-                 var selectHtml = createSelect("Image_exp1");
-                 updateSecondSelect(selectHtml);
-            }
-            document.getElementById("Image_exp1").selectedIndex = 0;
-            break;
-        case "Experimento2":
-            if (!secondSelectCreated) {
-                var selectHtml = createSelect("Image_exp2");
-                 updateSecondSelect(selectHtml);
-                secondSelectCreated = true;
-            }else {
-                var selectHtml = createSelect("Image_exp2");
-                 updateSecondSelect(selectHtml);
-            }
-            document.getElementById("Image_exp2").selectedIndex = 0;
-            break;
-        case "Experimento3":
-            if (!secondSelectCreated) {
-                var selectHtml = createSelect("Image_exp3");
-                 updateSecondSelect(selectHtml);
-                secondSelectCreated = true;
-            }else {
-                var selectHtml = createSelect("Image_exp3");
-                 updateSecondSelect(selectHtml);
-            }
-            document.getElementById("Image_exp3").selectedIndex = 0;
-            break;
-        case "Experimento4":
-            if (!secondSelectCreated) {
-                var selectHtml = createSelect("Image_exp4");
-                 updateSecondSelect(selectHtml);
-                secondSelectCreated = true;
-            }else {
-                var selectHtml = createSelect("Image_exp4");
-                 updateSecondSelect(selectHtml);
-            }
-            document.getElementById("Image_exp4").selectedIndex = 0;
-            break;
-        default:
-            // Si no se selecciona ninguna categoría, limpiar el contenido del segundo select
-            selectContainer.innerHTML = "";
-            secondSelectCreated = false;
-            break;
-    }
-}
+            <!-- Fake Audio List -->
+            <div class="fake-audios">
+                <div class="fake-audio-item">
+                    <div class="label">TTS Audio 1</div>
+                    <audio id="fake-audio-1" controls>
+                        <source id="fake-source-1" src="" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
 
-        function createSelect(selectId) {
-            if (selectId==="Image_exp5"){
-                var selectHtml = '<select id="' + selectId + '" onchange="loadContent(this.value)">';
-                selectHtml += '<option value="">Selecciona una imagen de Librivox</option>';
-                selectHtml += '<option value="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/Exp5/Exp5_first_steps.html">First steps</option>';
-                selectHtml += '<option value="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/Exp5/Exp5_final_steps.html">Final steps</option>';
-                selectHtml += '</select>';
-                return selectHtml;
-            }else if (selectId==="Image_exp6"){
-                var selectHtml = '<select id="' + selectId + '" onchange="loadContent(this.value)">';
-                selectHtml += '<option value="">Selecciona la clasificación</option>';
-                selectHtml += '<option value="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/Exp6/Exp6_first_steps.html">First steps</option>';
-                selectHtml += '<option value="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/Exp6/Exp6_final_steps.html">Final steps</option>';                
-                selectHtml += '</select>';
-                return selectHtml;
-            }else if (selectId==="Image_exp7"){
-                var selectHtml = '<select id="' + selectId + '" onchange="loadContent(this.value)">';
-                selectHtml += '<option value="">Selecciona la clasificación</option>';
-                selectHtml += '<option value="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/Exp7/Exp7_first_steps.html">First steps</option>';
-                selectHtml += '<option value="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/Exp7/Exp7_final_steps.html">Final steps</option>';    
-                selectHtml += '</select>';
-                return selectHtml;
-            }else if (selectId==="Image_exp1"){
-                var selectHtml = '<select id="' + selectId + '" onchange="loadContent(this.value)">';
-                selectHtml += '<option value="">Selecciona una imagen de Thalento Diálogo y Lectura</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento/Avg_tim_Thalento.html">Tiempo medio por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento/Median_time_Thalento.html">Tiempo mediano por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento/STD_time_Thalento.html">Desviación típica del tiempo por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento/AudioSpeakThal.html">Tiempo de audio y Nº frases por persona</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/UMAP/UMAP_Thalento_dial_lect_grande.html">UMAP</option>';
-                selectHtml += '</select>';
-                return selectHtml;
-            }else if (selectId==="Image_exp2"){
-                var selectHtml = '<select id="' + selectId + '" onchange="loadContent(this.value)">';
-               selectHtml += '<option value="">Selecciona una imagen de Thalento Lectura</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/Avg_tim_Thalento_lect.html">Tiempo medio por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/Median_time_Thalento_lect.html">Tiempo mediano por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/STD_time_Thalento_lect.html">Desviación típica del tiempo por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/AudioSpeakThal_lect.html">Tiempo de audio y Nº frases por persona</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/UMAP/UMAP_Thalento_lect.html">UMAP</option>';
-                selectHtml += '</select>';
-                return selectHtml;
-            }else if (selectId==="Image_exp3"){
-                var selectHtml = '<select id="' + selectId + '" onchange="loadContent(this.value)">';
-               selectHtml += '<option value="">Selecciona una imagen de Thalento Lectura</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/Avg_tim_Thalento_lect.html">Tiempo medio por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/Median_time_Thalento_lect.html">Tiempo mediano por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/STD_time_Thalento_lect.html">Desviación típica del tiempo por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/AudioSpeakThal_lect.html">Tiempo de audio y Nº frases por persona</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/UMAP/UMAP_Thalento_lect.html">UMAP</option>';
-                selectHtml += '</select>';
-                return selectHtml;
-            }else if (selectId==="Image_exp4"){
-                var selectHtml = '<select id="' + selectId + '" onchange="loadContent(this.value)">';
-               selectHtml += '<option value="">Selecciona una imagen de Thalento Lectura</option>';
-                selectHtml += '<option value="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/Thalento_lect/Avg_tim_Thalento_lect.html">Tiempo medio por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/Median_time_Thalento_lect.html">Tiempo mediano por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/STD_time_Thalento_lect.html">Desviación típica del tiempo por Nº letras</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/Thalento_lect/AudioSpeakThal_lect.html">Tiempo de audio y Nº frases por persona</option>';
-                selectHtml += '<option value="https://santirf01.github.io/TFG_Image_page.io/Imagenes/UMAP/UMAP_Thalento_lect.html">UMAP</option>';
-                selectHtml += '</select>';
-                return selectHtml;
+                <div class="fake-audio-item">
+                    <div class="label">TTS Audio 2</div>
+                    <audio id="fake-audio-2" controls>
+                        <source id="fake-source-2" src="" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+
+                <div class="fake-audio-item">
+                    <div class="label">TTS Audio 3</div>
+                    <audio id="fake-audio-3" controls>
+                        <source id="fake-source-3" src="" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <!-- Añade más audios aquí -->
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<div class="container">
+    <h2>Automatic Voice Disorder Detection</h2><br>
+    
+    <table>
+        <tr>
+            <th>UMAP SS Representation</th>
+            <td>
+                <select id="showCategory" onchange="showCategory(this.value)">
+                    <option value="Choose">Choose Experiment</option>
+                    <!--<option value="Exp1">Experiment 1</option>
+                    <option value="Exp2">Experiment 2</option>
+                    <option value="Exp3">Experiment 3</option>
+                    <option value="Exp4">Experiment 4</option>-->
+                    <option value="Exp5">Experiment 5</option>
+                    <option value="Exp6">Experiment 6</option>
+                    <option value="Exp7">Experiment 7</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><h3><center>First steps</center></h3></td>
+            <td><h3><center>Final steps</center></h3></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="contenido"></div>
+            </td>
+        </tr>
+    </table>
+</div>
+    
+<footer>
+    <p>&copy; 2024 Dashboard Elegante. Todos los derechos reservados.</p>
+</footer>
+    
+<!-- Script para cambiar las imágenes y los audios según el experimento seleccionado -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+<script>
+    
+        var secondSelectCreated = false;
+
+        // Función para cargar contenido directamente
+        function loadContent(url1, url2) {
+            var contenidoDiv = document.getElementById("contenido");
+            if (url1 && url2) {
+                // var title = stepType === "first" ? "UMAP First Steps" : "UMAP Final Steps";
+                contenidoDiv.innerHTML = `
+                    <div class="image-container">
+                        <iframe src="${url1}" width="840" height="640"></iframe>
+                        <iframe src="${url2}" width="840" height="640"></iframe>
+                    </div>`;
+            } else {
+                contenidoDiv.innerHTML = ""; 
             }
         }
+
+        // Mostrar contenido según el experimento seleccionado
+        function showCategory(experiment) {
+            if (experiment=="Choose") {
+                // Si no se selecciona un experimento, vaciar contenido
+                loadContent(null, null);
+                return;
+            }
+        
+            // Base URL donde están los archivos HTML para UMAP
+            const baseUrl = "https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/";
+        
+            // Generar las URLs para "First steps" y "Final steps" dinámicamente
+            const firstStepsUrl = `${baseUrl}${experiment}/${experiment}_first_steps.html`;
+            const finalStepsUrl = `${baseUrl}${experiment}/${experiment}_final_steps.html`;
+            // Cargar las dos URLs
+            console.log(firstStepsUrl, finalStepsUrl);
+            loadContent(firstStepsUrl, finalStepsUrl);
+        
+        }
+
+    
+        function updateAudioSources(speaker) {
+            // Update original audio source
+            const originalSource = document.getElementById("original-source");
+            originalSource.src = `https://santirf01.github.io/TFG_TTS_page.io/Thalento/Audios_Originales/${speaker}_D8_LECTURA.wav`;
+            document.getElementById("original-audio").load();
+
+            // Update fake audio sources
+            const fakeSource1 = document.getElementById("fake-source-1");
+            fakeSource1.src = `https://santirf01.github.io/TFG_TTS_page.io/Thalento/Audios/${speaker}/${speaker}_0001.wav`;
+            document.getElementById("fake-audio-1").load();
+
+            const fakeSource2 = document.getElementById("fake-source-2");
+            fakeSource2.src = `https://santirf01.github.io/TFG_TTS_page.io/Thalento/Audios/${speaker}/${speaker}_0002.wav`;
+            document.getElementById("fake-audio-2").load();
+
+            const fakeSource3 = document.getElementById("fake-source-3");
+            fakeSource3.src = `https://santirf01.github.io/TFG_TTS_page.io/Thalento/Audios/${speaker}/${speaker}_0003.wav`;
+            document.getElementById("fake-audio-3").load();
+        }
+
+        // Event listener for speaker selection change
+        const speakerSelect = document.getElementById("speaker-select");
+        speakerSelect.addEventListener("change", (event) => {
+            const selectedSpeaker = event.target.value;
+            updateAudioSources(selectedSpeaker);
+            updateSpeaker(selectedSpeaker);
+        });
+
+        // Set default speaker on load
+        window.onload = function() {
+            loadCSV();
+            updateAudioSources(document.getElementById("speaker-select").value);
+            updateSpeaker(document.getElementById("speaker-select").value);
+        };
+    // CSV
+        let speakersData = {};
+        
+        // Función para cargar y procesar el CSV usando PapaParse
+        function loadCSV() {
+            Papa.parse('https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/speaker_info.csv', {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    speakersData = results.data;
+                    populateSpeakerSelect();
+                }
+            });
+        }
+        
+        // Función para llenar el selector de speakers
+        function populateSpeakerSelect() {
+            const select = document.getElementById('speaker-select');
+            speakersData.forEach(speaker => {
+                const option = document.createElement('option');
+                option.value = speaker.Código;
+                option.text = speaker.Código;
+                select.appendChild(option);
+            });
+        }
+        
+        // Función para actualizar la información y los audios cuando se selecciona un speaker
+        function updateSpeaker(selectedSpeaker) {
+            const speakerInfo = speakersData.find(speaker => speaker.Código === selectedSpeaker);
+        
+            if (speakerInfo) {
+                // Actualizar información del speaker
+                document.getElementById('speakerInfo').innerHTML = `
+                    <strong>Name:</strong> ${speakerInfo.Código}<br>
+                    <strong>Age:</strong> ${speakerInfo.Edad}<br>
+                    <strong>Gender:</strong> ${speakerInfo.Sexo}<br>
+                    <strong>Diagnosis:</strong> ${speakerInfo.Diagnóstico}<br>
+                    <strong>Severity (GRBAS-1):</strong> ${speakerInfo['GRBAS-1']}<br>
+                    <strong>Severity (GRBAS-2):</strong> ${speakerInfo['GRBAS-2']}`;
+            }
+        }
+        
+    
     </script>
+
 </body>
+
 </html>
