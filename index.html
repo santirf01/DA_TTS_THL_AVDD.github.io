@@ -172,6 +172,15 @@
             font-size: 14px;
             color: #555;
         }
+        #image-container_steps {
+            width: 600px;
+            height: 400px;
+            text-align: center;
+        }
+        #image-container_Steps img {
+            max-width: 100%;
+            max-height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -295,17 +304,51 @@
         </tr>
     </table>
 </div>
+<div class="container">
+<h2></h2>
     
+     <table>
+        <tr>
+            <th>Test UMAP SS Representation Evolution </th>
+            <td>
+                <select id="act_fold" onchange="choose_fold(this.value,document.getElementById('showCategory').value)">
+                    <option value="Choose"> Choose fold</option>
+                    <option value="Fold1">Fold 1</option>
+                    <option value="Fold2">Fold 2</option>
+                    <option value="Fold3">Fold 3</option>
+                    <option value="Fold4">Fold 4</option>
+                    <option value="Fold5">Fold 5</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><h3><center>UMAP by Audio</center></h3></td>
+            <td><h3><center>UMAP mean by speaker</center></h3></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="contenido_steps"></div>
+            </td>
+        </tr>
+    </table>
+</div>
+        
+        <!--<img id="step-image" src="https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/Exp6/fold5/step6000_labels_speaker.html" alt="Imagen de Step">-->
+    
+    <label for="step-slider">Step:</label>
+    <input type="range" id="step-slider" min="1000" max="5000" value="5000" step="1000">
+    <span id="step-number">5000</span>
+</div>
 <footer>
-    <p>&copy; IberSPEECH 2024.Assessing the Impact and Potential of TTS for Pathological Voice Data Augmentation on Pathology Detection Systems.</p>
+     <p>&copy; IberSPEECH 2024.Assessing the Impact and Potential of TTS for Pathological Voice Data Augmentation on Pathology Detection Systems.</p>
 </footer>
     
 <!-- Script para cambiar las imágenes y los audios según el experimento seleccionado -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-    
-        var secondSelectCreated = false;
 
+        var secondSelectCreated = false;
+        const baseUrl = "https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/";
         // Función para cargar contenido directamente
         function loadContent(url1, url2) {
             var contenidoDiv = document.getElementById("contenido");
@@ -323,23 +366,23 @@
 
         // Mostrar contenido según el experimento seleccionado
         function showCategory(experiment) {
-            if (experiment=="Choose") {
-                // Si no se selecciona un experimento, vaciar contenido
+            if (experiment === "Choose") {
                 loadContent(null, null);
                 return;
             }
-        
-            // Base URL donde están los archivos HTML para UMAP
-            const baseUrl = "https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/UMAP/";
-        
-            // Generar las URLs para "First steps" y "Final steps" dinámicamente
+            
             const firstStepsUrl = `${baseUrl}${experiment}/${experiment}_first_steps.html`;
             const finalStepsUrl = `${baseUrl}${experiment}/${experiment}_final_steps.html`;
-            // Cargar las dos URLs
-            console.log(firstStepsUrl, finalStepsUrl);
             loadContent(firstStepsUrl, finalStepsUrl);
-        
-        }
+            
+            // Si ya se ha seleccionado un fold, cargar también los pasos
+            if (selectedFold !== 'Choose') {
+                const step = slider.value;
+                const step_image1 = `${baseUrl}${experiment}/${selectedFold}/step${step}_labels_audio.html`;
+                const step_image2 = `${baseUrl}${experiment}/${selectedFold}/step${step}_labels_speaker.html`;
+                loadContent_steps_image(step_image1, step_image2);
+            }
+        }    
 
     
         function updateAudioSources(speaker) {
@@ -375,10 +418,14 @@
             loadCSV();
             updateAudioSources(document.getElementById("speaker-select").value);
             updateSpeaker(document.getElementById("speaker-select").value);
+            //const initialStep = slider.value;
+            //const step_image1 = `${baseUrl}${experiment}/${selectedFold}/step${step}_labels_audio.html`;
+            //const step_image2 = `${baseUrl}${experiment}/${selectedFold}/step${step}_labels_speaker.html`;
+            //loadContent_steps_image(step_image1, step_image2);
         };
     // CSV
         let speakersData = {};
-        
+        let selectedFold = 'fold5';  // Valor por defecto
         // Función para cargar y procesar el CSV usando PapaParse
         function loadCSV() {
             Papa.parse('https://santirf01.github.io/DA_TTS_THL_AVDD.github.io/speaker_info.csv', {
@@ -390,10 +437,10 @@
                 }
             });
         }
-        
         // Función para llenar el selector de speakers
         function populateSpeakerSelect() {
             const select = document.getElementById('speaker-select');
+            select.innerHTML = ""; // Limpiar antes de añadir nuevas opciones
             speakersData.forEach(speaker => {
                 const option = document.createElement('option');
                 option.value = speaker.Código;
@@ -401,6 +448,8 @@
                 select.appendChild(option);
             });
         }
+
+        
         
         // Función para actualizar la información y los audios cuando se selecciona un speaker
         function updateSpeaker(selectedSpeaker) {
@@ -417,10 +466,52 @@
                     <strong>Severity (GRBAS-2):</strong> ${speakerInfo['GRBAS-2']}`;
             }
         }
-        
+        function choose_fold(fold, experiment) {
+            if (fold !== "Choose" && experiment !== "Choose") {
+                selectedFold = fold.toLowerCase();
+                const step = slider.value;
+                const step_image1 = `${baseUrl}${experiment}/${selectedFold}/step${step}_labels_audio.html`;
+                const step_image2 = `${baseUrl}${experiment}/${selectedFold}/step${step}_labels_speaker.html`;
+                console.log(step_image1, step_image2);
+                loadContent_steps_image(step_image1, step_image2);
+            }
+        }
+
+    
+        const slider = document.getElementById('step-slider');
+        const image = document.getElementById('step-image');
+        const stepNumber = document.getElementById('step-number');
+
+        function loadContent_steps_image(url1, url2) {
+            var contenidoDiv = document.getElementById("contenido_steps");
+            if (url1 && url2) {
+                contenidoDiv.innerHTML = `
+                    <div class="image-container">
+                        <iframe src="${url1}" width="840" height="640"></iframe>
+                        <iframe src="${url2}" width="840" height="640"></iframe>
+                    </div>`;
+            } else {
+                contenidoDiv.innerHTML = ""; 
+            }
+        }
+
+
+        slider.addEventListener('input', function() {
+            const step = slider.value;
+            stepNumber.textContent = step;
+                // Verifica si se ha seleccionado un experimento
+            const experiment = document.getElementById('showCategory').value;
+            console.log(experiment);
+            if (experiment === "Choose") {
+                console.log("Please select an experiment first.");
+                return; // Si no se ha seleccionado un experimento, no continúes.
+            }
+            // Actualizar la fuente de la imagen
+            const step_image1 = `${baseUrl}${experiment}/${selectedFold}/step${step}_labels_audio.html`;
+            const step_image2 = `${baseUrl}${experiment}/${selectedFold}/step${step}_labels_speaker.html`;
+            loadContent_steps_image(step_image1, step_image2);
+        });
     
     </script>
 
 </body>
-
-</html>
